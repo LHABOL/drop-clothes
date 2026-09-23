@@ -1,0 +1,31 @@
+{%- comment -%} Velo negro para la transición parallax entre páginas. {%- endcomment -%}
+<div class="route-veil" id="route-veil" aria-hidden="true">
+  <div class="route-veil__layer"></div>
+  <div class="route-veil__layer route-veil__layer--2"></div>
+  <div class="route-veil__figure" id="route-veil-figure"></div>
+  <p class="route-veil__label display" id="route-veil-label"></p>
+</div>
+
+<template id="figure-mujer">
+  <svg viewBox="0 0 100 210" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="22" r="14"/><path d="M50 44 C36 48 30 68 34 94 C22 108 17 148 15 170 L85 170 C83 148 78 108 66 94 C70 68 64 48 50 44 Z"/><path d="M34 60 C24 78 20 98 23 118"/><path d="M66 60 C76 78 80 98 77 118"/></svg>
+</template>
+<template id="figure-hombre">
+  <svg viewBox="0 0 100 210" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><circle cx="50" cy="20" r="13"/><path d="M32 46 C29 62 32 78 37 90 L30 168 L46 168 L50 96 L54 168 L70 168 L63 90 C68 78 71 62 68 46 C68 46 58 40 50 40 C42 40 32 46 32 46 Z"/><path d="M32 50 C22 62 18 78 22 96"/><path d="M68 50 C78 62 82 78 78 96"/></svg>
+</template>
+
+<script>
+  (function () {
+    try {
+      var raw = sessionStorage.getItem('dropVeil');
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      var label = document.getElementById('route-veil-label');
+      var fig = document.getElementById('route-veil-figure');
+      if (label) label.textContent = data.label || 'DROP.';
+      if (fig && data.figure) {
+        var tpl = document.getElementById('figure-' + data.figure);
+        if (tpl) fig.innerHTML = tpl.innerHTML;
+      }
+    } catch (e) {}
+  })();
+</script>

@@ -1,0 +1,110 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Ropa de marca · México",
+        "heading": "Ropa de\nmarca.\nSin *bodega*.",
+        "subtext": "Curamos prendas de marcas independientes y las enviamos directo del proveedor a tu puerta — sin intermediarios, sin stock parado, sin relleno.",
+        "badge": "Nuevo drop cada semana",
+        "button_primary_label": "Ver catálogo",
+        "button_secondary_label": "Cómo funciona"
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "items": "Denim, Outerwear, Sneakers, Streetwear, Accesorios, Ediciones limitadas"
+      }
+    },
+    "manifesto": {
+      "type": "manifesto",
+      "blocks": {
+        "l1": { "type": "line", "settings": { "text": "Vestirse bien *NUNCA* fue moda, es una *NECESIDAD*.", "align": "left" } },
+        "l2": { "type": "line", "settings": { "text": "No hay talla única para la *ACTITUD*.", "align": "right" } },
+        "l3": { "type": "line", "settings": { "text": "Cada *DROP* es una declaración, no una compra.", "align": "center" } }
+      },
+      "block_order": ["l1", "l2", "l3"],
+      "settings": {}
+    },
+    "drops": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "",
+        "limit": 8,
+        "placeholder_count": 8,
+        "eyebrow": "Nueva temporada",
+        "heading": "Drops\nactivos",
+        "text": "Disponibilidad real del proveedor. Lo que se agota, se agota — no hay bodega de respaldo."
+      }
+    },
+    "story": {
+      "type": "story",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "7–15", "label": "Días de entrega" } },
+        "s2": { "type": "stat", "settings": { "value": "0", "label": "Bodegas propias" } },
+        "s3": { "type": "stat", "settings": { "value": "100%", "label": "Pago seguro" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Cómo trabajamos las marcas",
+        "heading": "Curaduría,\nno bodega",
+        "text_1": "No compramos por volumen ni almacenamos temporada tras temporada. Cada marca que entra al catálogo pasa por una revisión de materiales, ajuste de tallas y tiempos reales de entrega antes de publicarse.",
+        "text_2": "Cuando compras, el proveedor surte directo desde su taller o almacén — nosotros coordinamos el pedido, el pago y el seguimiento, para que la prenda llegue igual de bien sin pasar por una bodega intermedia."
+      }
+    },
+    "how": {
+      "type": "how-it-works",
+      "blocks": {
+        "h1": { "type": "step", "settings": { "title": "Eliges la prenda", "text": "Filtra por categoría o género. Cada ficha muestra la disponibilidad real del proveedor." } },
+        "h2": { "type": "step", "settings": { "title": "Pagas de forma segura", "text": "Agrega al carrito y finaliza tu compra en el checkout de Shopify, con tarjeta, PayPal u otros métodos." } },
+        "h3": { "type": "step", "settings": { "title": "Se envía directo", "text": "El proveedor empaca y despacha a tu domicilio. Tú solo sigues el rastreo." } }
+      },
+      "block_order": ["h1", "h2", "h3"],
+      "settings": {
+        "eyebrow": "El recorrido de tu pedido",
+        "heading": "Cómo\nfunciona",
+        "text": "Tres pasos, un solo envío. Sin pasar por una bodega intermedia ni inventario que sobra."
+      }
+    },
+    "explore": {
+      "type": "explore",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "style": "photo", "label": "Calzado", "link": "/collections/calzado", "fallback_photo": "none", "veil_figure": "none" } },
+        "t2": { "type": "tile", "settings": { "style": "photo", "label": "Pantalones", "link": "/collections/pantalones", "fallback_photo": "none", "veil_figure": "none" } },
+        "t3": { "type": "tile", "settings": { "style": "photo", "label": "Hombres", "link": "/collections/hombres", "fallback_photo": "hombre", "veil_figure": "hombre" } },
+        "t4": { "type": "tile", "settings": { "style": "photo", "label": "Mujeres", "link": "/collections/mujeres", "fallback_photo": "mujer", "veil_figure": "mujer" } },
+        "t5": { "type": "tile", "settings": { "style": "text", "label": "Nosotros", "subtitle": "Cómo curamos cada marca →", "link": "#marcas" } },
+        "t6": { "type": "tile", "settings": { "style": "text", "label": "Contacto", "subtitle": "Pedidos, cambios y soporte →", "link": "#contacto" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
+      "settings": {
+        "eyebrow": "A dónde ir",
+        "heading": "Explora\nDROP.",
+        "text": "Entra directo a la categoría que buscas, o conoce cómo trabajamos."
+      }
+    },
+    "order": {
+      "type": "order-form",
+      "blocks": {
+        "o1": { "type": "step", "settings": { "text": "Llena el formulario o escríbenos por WhatsApp." } },
+        "o2": { "type": "step", "settings": { "text": "Confirmamos disponibilidad, tallas y tiempos de entrega." } },
+        "o3": { "type": "step", "settings": { "text": "Te enviamos el enlace de pago seguro y armamos tu envío." } }
+      },
+      "block_order": ["o1", "o2", "o3"],
+      "settings": {
+        "eyebrow": "Pedidos personalizados",
+        "heading": "Haz tu\npedido",
+        "text": "¿No encuentras tu talla o quieres varias prendas a la vez? Cuéntanos qué buscas y te atendemos personalmente."
+      }
+    },
+    "cta": {
+      "type": "cta-band",
+      "settings": {
+        "heading": "Únete al próximo drop antes de que se agote",
+        "button_label": "Ver catálogo completo"
+      }
+    }
+  },
+  "order": ["hero", "marquee", "manifesto", "drops", "story", "how", "explore", "order", "cta"]
+}

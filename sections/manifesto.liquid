@@ -1,0 +1,44 @@
+<section class="manifesto" aria-label="Manifiesto">
+  <div class="section-grid" data-speed="0.4" aria-hidden="true"></div>
+  {%- for block in section.blocks -%}
+    <p class="manifesto__line{% if block.settings.align == 'right' %} manifesto__line--right{% elsif block.settings.align == 'center' %} manifesto__line--center{% endif %} display reveal" {{ block.shopify_attributes }}>
+      {%- render 'emphasis', text: block.settings.text -%}
+    </p>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Manifiesto",
+  "blocks": [
+    {
+      "type": "line",
+      "name": "Frase",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "info": "Lo que vaya entre *asteriscos* se resalta.", "default": "Frase de impacto con *énfasis*." },
+        {
+          "type": "select",
+          "id": "align",
+          "label": "Alineación",
+          "default": "left",
+          "options": [
+            { "value": "left", "label": "Izquierda" },
+            { "value": "right", "label": "Derecha" },
+            { "value": "center", "label": "Centro" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Manifiesto",
+      "blocks": [
+        { "type": "line", "settings": { "text": "Vestirse bien *NUNCA* fue moda, es una *NECESIDAD*.", "align": "left" } },
+        { "type": "line", "settings": { "text": "No hay talla única para la *ACTITUD*.", "align": "right" } },
+        { "type": "line", "settings": { "text": "Cada *DROP* es una declaración, no una compra.", "align": "center" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<section class="explore" aria-label="Explora">
+  <div class="section-grid" data-speed="0.42" aria-hidden="true"></div>
+  <div class="section-head reveal">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="display">{{ section.settings.heading | escape | newline_to_br }}</h2>
+    </div>
+    <p>{{ section.settings.text }}</p>
+  </div>
+
+  <div class="explore__grid">
+    {%- for block in section.blocks -%}
+      {%- assign s = block.settings -%}
+      {%- if s.style == 'photo' -%}
+        <a class="explore__tile explore__tile--photo reveal" href="{{ s.link | default: '#' }}" data-veil="{{ s.label | escape }}"{% if s.veil_figure != 'none' %} data-veil-figure="{{ s.veil_figure }}"{% endif %} {{ block.shopify_attributes }}>
+          {%- if s.image != blank -%}
+            <span class="explore__tile-photo photo" data-speed="0.85" style="background-image:url('{{ s.image | image_url: width: 1000 }}')"></span>
+          {%- elsif s.fallback_photo == 'hombre' -%}
+            <span class="explore__tile-photo photo" data-speed="0.85" style="background-image:url('{{ 'hombre.jpg' | asset_url }}')"></span>
+          {%- elsif s.fallback_photo == 'mujer' -%}
+            <span class="explore__tile-photo photo" data-speed="0.85" style="background-image:url('{{ 'mujer.jpg' | asset_url }}')"></span>
+          {%- else -%}
+            <span class="explore__tile-photo card__ph" data-speed="0.85">Foto próximamente</span>
+          {%- endif -%}
+          <span class="explore__tile-veil"></span>
+          <span class="explore__tile-label display">{{ s.label }}</span>
+        </a>
+      {%- else -%}
+        <a class="explore__tile explore__tile--text reveal" href="{{ s.link | default: '#' }}" {{ block.shopify_attributes }}>
+          <span class="explore__tile-label display">{{ s.label }}</span>
+          <span class="explore__tile-sub">{{ s.subtitle }}</span>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Explora (accesos)",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto superior", "default": "A dónde ir" },
+    { "type": "textarea", "id": "heading", "label": "Título", "default": "Explora\nDROP." },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Entra directo a la categoría que buscas, o conoce cómo trabajamos." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Acceso",
+      "settings": [
+        { "type": "select", "id": "style", "label": "Estilo", "default": "photo", "options": [
+          { "value": "photo", "label": "Con foto" },
+          { "value": "text", "label": "Solo texto" }
+        ] },
+        { "type": "text", "id": "label", "label": "Título", "default": "Categoría" },
+        { "type": "text", "id": "subtitle", "label": "Subtítulo (solo estilo texto)" },
+        { "type": "url", "id": "link", "label": "Enlace" },
+        { "type": "image_picker", "id": "image", "label": "Foto (estilo con foto)" },
+        { "type": "select", "id": "fallback_photo", "label": "Foto incluida si no subes una", "default": "none", "options": [
+          { "value": "none", "label": "Ninguna (espacio en blanco)" },
+          { "value": "hombre", "label": "Modelo hombre" },
+          { "value": "mujer", "label": "Modelo mujer" }
+        ] },
+        { "type": "select", "id": "veil_figure", "label": "Silueta en la transición", "default": "none", "options": [
+          { "value": "none", "label": "Ninguna" },
+          { "value": "hombre", "label": "Hombre" },
+          { "value": "mujer", "label": "Mujer" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Explora (accesos)" }]
+}
+{% endschema %}

@@ -1,0 +1,111 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign compare = current_variant.compare_at_price
+  assign wa_msg = settings.whatsapp_message | append: '. Me interesa: ' | append: product.title | append: ' — ' | append: shop.url | append: product.url
+  assign wa_text = wa_msg | url_encode | replace: '+', '%20'
+-%}
+
+<div class="cat-topbar">
+  <a class="cat-back" href="{{ routes.collections_url }}/all" data-veil="Productos">&larr; Seguir comprando</a>
+</div>
+
+<article class="pdp" data-product-section data-product-url="{{ product.url }}">
+  <div class="pdp__media">
+    <div class="pdp__main" data-main-media>
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | default: product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" data-main-img>
+      {%- else -%}
+        <div class="card__ph">Foto próximamente</div>
+      {%- endif -%}
+    </div>
+    {%- if product.images.size > 1 -%}
+      <div class="pdp__thumbs">
+        {%- for image in product.images -%}
+          <button class="pdp__thumb" type="button" data-thumb="{{ image | image_url: width: 1400 }}" data-image-id="{{ image.id }}"{% if image.id == product.featured_image.id %} aria-current="true"{% endif %} aria-label="Ver foto {{ forloop.index }}">
+            <img src="{{ image | image_url: width: 160 }}" alt="" loading="lazy" width="72" height="72">
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="pdp__info">
+    <p class="eyebrow pdp__vendor">{{ product.vendor }}</p>
+    <h1 class="pdp__title display">{{ product.title }}</h1>
+
+    <div class="pdp__price mono" data-pdp-price>
+      <span data-price>{{ current_variant.price | money_without_trailing_zeros }} {{ cart.currency.iso_code }}</span>
+      <s data-price-old{% unless compare > current_variant.price %} hidden{% endunless %}>{{ compare | money_without_trailing_zeros }}</s>
+      {%- if compare > current_variant.price -%}
+        {%- assign off = compare | minus: current_variant.price | times: 100 | divided_by: compare | round -%}
+        <span class="card__discount mono" data-discount>-{{ off }}%</span>
+      {%- else -%}
+        <span class="card__discount mono" data-discount hidden></span>
+      {%- endif -%}
+    </div>
+
+    {%- form 'product', product, id: 'product-form', class: 'pdp__buy' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+          {%- assign opt_i = forloop.index0 -%}
+          <fieldset class="option" data-option-index="{{ forloop.index0 }}">
+            <legend>{{ option.name }}</legend>
+            <div class="option__values">
+              {%- for value in option.values -%}
+                <label class="option__pill">
+                  <input type="radio" name="option-{{ opt_i }}" value="{{ value | escape }}"{% if option.selected_value == value %} checked{% endif %}>
+                  <span>{{ value }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </fieldset>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      <div class="qty" style="align-self:flex-start">
+        <button type="button" data-qty-step="-1" aria-label="Menos">−</button>
+        <input type="number" name="quantity" value="1" min="1" max="99" inputmode="numeric" aria-label="Cantidad" data-qty-input>
+        <button type="button" data-qty-step="1" aria-label="Más">+</button>
+      </div>
+
+      <p class="pdp__error" role="alert" data-form-error></p>
+
+      <button class="btn btn--accent btn--block" type="submit" name="add" data-add-to-cart{% unless current_variant.available %} disabled{% endunless %}>
+        {%- if current_variant.available -%}Agregar al carrito{%- else -%}Agotado{%- endif -%}
+      </button>
+
+      {%- if section.settings.show_dynamic_checkout -%}
+        {{ form | payment_button }}
+      {%- endif -%}
+
+      <a class="btn btn--wa btn--block" href="https://wa.me/{{ settings.whatsapp_number | strip }}?text={{ wa_text }}" target="_blank" rel="noopener">
+        {% render 'icon-whatsapp' %} Consultar por WhatsApp
+      </a>
+    {%- endform -%}
+
+    {%- if product.description != blank -%}
+      <div class="pdp__desc rte">{{ product.description }}</div>
+    {%- endif -%}
+
+    <p class="pdp__note">Pago seguro con tarjeta, PayPal y otros métodos disponibles en el checkout de Shopify. Envío directo del proveedor a tu domicilio.</p>
+  </div>
+
+  <script type="application/json" data-product-json>{{ product | json }}</script>
+</article>
+
+{% schema %}
+{
+  "name": "Producto (página)",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Mostrar botones de pago rápido (PayPal, Shop Pay, Apple Pay…)",
+      "info": "Aparecen solo si los activas en Configuración → Pagos.",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

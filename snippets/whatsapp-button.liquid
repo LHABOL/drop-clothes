@@ -1,0 +1,5 @@
+{%- assign wa_text = settings.whatsapp_message | url_encode | replace: '+', '%20' -%}
+<a class="wa-float" href="https://wa.me/{{ settings.whatsapp_number | strip }}?text={{ wa_text }}" target="_blank" rel="noopener" data-whatsapp aria-label="{{ settings.whatsapp_label | escape }}">
+  {% render 'icon-whatsapp' %}
+  <span>{{ settings.whatsapp_label }}</span>
+</a>

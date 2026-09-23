@@ -1,0 +1,10 @@
+{%- comment -%}
+  Muestra un texto y resalta con acento lo que vaya entre *asteriscos*.
+  Uso: {% render 'emphasis', text: section.settings.heading %}
+  Los saltos de línea del texto se respetan.
+{%- endcomment -%}
+{%- assign parts = text | escape | split: '*' -%}
+{%- for part in parts -%}
+  {%- assign odd = forloop.index0 | modulo: 2 -%}
+  {%- if odd == 1 -%}<em>{{ part | newline_to_br }}</em>{%- else -%}{{ part | newline_to_br }}{%- endif -%}
+{%- endfor -%}

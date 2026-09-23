@@ -1,0 +1,18 @@
+<div class="cart-drawer" id="cart-drawer" data-cart-drawer aria-hidden="true">
+  <div class="cart-drawer__overlay" data-cart-close></div>
+  <div class="cart-drawer__panel" role="dialog" aria-modal="true" aria-label="Carrito" data-count="{{ cart.item_count }}">
+    <div class="cart-drawer__head">
+      <h2 class="cart-drawer__title display">Tu carrito</h2>
+      <button class="icon-btn" type="button" data-cart-close aria-label="Cerrar carrito">×</button>
+    </div>
+    <div class="cart-content" data-cart-content>
+      {% render 'cart-contents' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cajón del carrito"
+}
+{% endschema %}

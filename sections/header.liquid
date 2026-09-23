@@ -1,0 +1,97 @@
+{%- liquid
+  assign cols = routes.collections_url
+  assign home = routes.root_url
+-%}
+
+<header class="nav" data-header>
+  <a href="{{ home }}" class="nav__logo" data-veil="{{ settings.logo_text | default: 'DROP' }}.">{{ settings.logo_text | default: 'DROP' }}<span>.</span></a>
+
+  <nav class="nav__links" aria-label="Principal">
+    <div class="nav__dropdown">
+      <button class="nav__dropdown-trigger" id="productos-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="productos-menu">
+        Productos
+        <svg viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1"/></svg>
+      </button>
+      <div class="nav__dropdown-panel" id="productos-menu" aria-label="Ir a categoría">
+        <div class="nav__dropdown-group nav__dropdown-group--gendered">
+          <div class="nav__figure-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 210" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+              <circle cx="50" cy="22" r="14"/>
+              <path d="M50 44 C36 48 30 68 34 94 C22 108 17 148 15 170 L85 170 C83 148 78 108 66 94 C70 68 64 48 50 44 Z"/>
+              <path d="M34 60 C24 78 20 98 23 118"/>
+              <path d="M66 60 C76 78 80 98 77 118"/>
+            </svg>
+          </div>
+          <span class="nav__dropdown-label">Mujeres</span>
+          <a class="nav__filter" href="{{ cols }}/mujeres" data-veil="Mujeres" data-veil-figure="mujer">Ver todo</a>
+        </div>
+        <div class="nav__dropdown-group">
+          <span class="nav__dropdown-label">Categoría</span>
+          <a class="nav__filter" href="{{ cols }}/calzado" data-veil="Calzado">Calzado</a>
+          <a class="nav__filter" href="{{ cols }}/pantalones" data-veil="Pantalones">Pantalones</a>
+          <a class="nav__filter" href="{{ cols }}/playeras" data-veil="Playeras">Playeras</a>
+          <a class="nav__filter" href="{{ cols }}/camisas" data-veil="Camisas">Camisas</a>
+        </div>
+        <div class="nav__dropdown-group nav__dropdown-group--gendered">
+          <div class="nav__figure-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 210" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+              <circle cx="50" cy="20" r="13"/>
+              <path d="M32 46 C29 62 32 78 37 90 L30 168 L46 168 L50 96 L54 168 L70 168 L63 90 C68 78 71 62 68 46 C68 46 58 40 50 40 C42 40 32 46 32 46 Z"/>
+              <path d="M32 50 C22 62 18 78 22 96"/>
+              <path d="M68 50 C78 62 82 78 78 96"/>
+            </svg>
+          </div>
+          <span class="nav__dropdown-label">Hombres</span>
+          <a class="nav__filter" href="{{ cols }}/hombres" data-veil="Hombres" data-veil-figure="hombre">Ver todo</a>
+        </div>
+      </div>
+    </div>
+    <a href="{{ home }}#marcas">Nosotros</a>
+    <a href="{{ home }}#como-funciona">Cómo funciona</a>
+    <a href="{{ home }}#pedido">Hacer un pedido</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <div class="nav__right">
+    <button class="nav__cart mono" type="button" data-cart-open aria-label="Abrir carrito">
+      CARRITO · <span class="nav__cart-count" data-cart-count>{{ cart.item_count }}</span>
+    </button>
+    <button class="nav__toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+  <div class="mobile-menu__group">
+    <span class="mobile-menu__label">Categoría</span>
+    <a href="{{ cols }}/calzado" data-veil="Calzado">Calzado</a>
+    <a href="{{ cols }}/pantalones" data-veil="Pantalones">Pantalones</a>
+    <a href="{{ cols }}/playeras" data-veil="Playeras">Playeras</a>
+    <a href="{{ cols }}/camisas" data-veil="Camisas">Camisas</a>
+  </div>
+  <div class="mobile-menu__group">
+    <span class="mobile-menu__label">Para</span>
+    <a href="{{ cols }}/mujeres" data-veil="Mujeres" data-veil-figure="mujer">Mujeres</a>
+    <a href="{{ cols }}/hombres" data-veil="Hombres" data-veil-figure="hombre">Hombres</a>
+  </div>
+  <div class="mobile-menu__group">
+    <span class="mobile-menu__label">DROP.</span>
+    <a href="{{ home }}#marcas">Nosotros</a>
+    <a href="{{ home }}#como-funciona">Cómo funciona</a>
+    <a href="{{ home }}#pedido">Hacer un pedido</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "El logotipo y el número de WhatsApp se cambian en Configuración del tema. Las categorías del menú apuntan a las colecciones: calzado, pantalones, playeras, camisas, hombres y mujeres."
+    }
+  ]
+}
+{% endschema %}

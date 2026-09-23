@@ -1,0 +1,80 @@
+{%- comment -%}
+  Tarjeta de producto.
+  Si el producto no tiene imagen, muestra un espacio en blanco listo para la foto.
+  Si no se pasa "product", pinta una tarjeta vacía (placeholder).
+  Parámetros: product (opcional)
+{%- endcomment -%}
+{%- if product == blank -%}
+  <article class="card card--placeholder reveal">
+    <span class="card__string"></span>
+    <div class="card__photo">
+      <div class="card__ph">Foto próximamente</div>
+    </div>
+    <div class="card__body">
+      <div class="card__meta">
+        <span class="card__brand">Marca</span>
+        <span class="card__stock mono">PRÓXIMAMENTE</span>
+      </div>
+      <h3 class="card__name">Nombre del producto</h3>
+      <div class="card__foot">
+        <span class="card__price-group"><span class="card__price mono">$0 {{ cart.currency.iso_code }}</span></span>
+        <span class="card__cat">Categoría</span>
+      </div>
+    </div>
+  </article>
+{%- else -%}
+  {%- assign first_variant = product.selected_or_first_available_variant -%}
+  {%- assign compare = product.compare_at_price -%}
+  {%- if compare > product.price -%}
+    {%- assign off = compare | minus: product.price | times: 100 | divided_by: compare | round -%}
+  {%- else -%}
+    {%- assign off = 0 -%}
+  {%- endif -%}
+  <article class="card reveal">
+    <span class="card__string"></span>
+    <div class="card__photo" data-speed="0.88">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 800 }}"
+          srcset="{{ product.featured_image | image_url: width: 400 }} 400w, {{ product.featured_image | image_url: width: 800 }} 800w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+          sizes="(min-width: 900px) 25vw, (min-width: 560px) 50vw, 100vw"
+          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+          width="{{ product.featured_image.width }}"
+          height="{{ product.featured_image.height }}"
+          loading="lazy">
+      {%- else -%}
+        <div class="card__ph">Foto próximamente</div>
+      {%- endif -%}
+      {%- if off > 0 and product.available -%}
+        <span class="card__discount mono">-{{ off }}%</span>
+      {%- endif -%}
+      {%- unless product.available -%}
+        <span class="card__badge-soldout">AGOTADO</span>
+      {%- endunless -%}
+    </div>
+    <div class="card__body">
+      <div class="card__meta">
+        <span class="card__brand">{{ product.vendor }}</span>
+        {%- if product.available and product.variants.size == 1 -%}
+          {%- if first_variant.inventory_management == 'shopify' and first_variant.inventory_quantity > 0 and first_variant.inventory_quantity < 10 -%}
+            <span class="card__stock mono">ÚLTIMAS {{ first_variant.inventory_quantity }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+      <h3 class="card__name"><a class="card__link" href="{{ product.url }}">{{ product.title }}</a></h3>
+      <div class="card__foot">
+        {% render 'price', product: product %}
+        <span class="card__cat">{{ product.type }}</span>
+      </div>
+      {%- if product.available -%}
+        <div class="card__actions">
+          {%- if product.variants.size == 1 -%}
+            <button class="btn btn--line" type="button" data-quick-add="{{ first_variant.id }}">Agregar</button>
+          {%- else -%}
+            <a class="btn btn--line" href="{{ product.url }}">Elegir talla</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </article>
+{%- endif -%}

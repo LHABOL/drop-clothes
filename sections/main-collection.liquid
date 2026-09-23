@@ -1,0 +1,89 @@
+{%- liquid
+  assign cols = routes.collections_url
+  assign hero_img = blank
+  if collection.image != blank
+    assign hero_img = collection.image | image_url: width: 2000
+  elsif collection.handle == 'hombres'
+    assign hero_img = 'hombre.jpg' | asset_url
+  elsif collection.handle == 'mujeres'
+    assign hero_img = 'mujer.jpg' | asset_url
+  endif
+  assign cat_links = 'calzado,pantalones,playeras,camisas,hombres,mujeres' | split: ','
+-%}
+
+<div class="cat-topbar">
+  <a class="cat-back" href="{{ routes.root_url }}" data-veil="DROP.">&larr; Volver al inicio</a>
+</div>
+
+<section class="cat-hero">
+  {%- if hero_img != blank -%}
+    <div class="cat-hero__photo photo" data-speed="0.5" aria-hidden="true" style="background-image:url('{{ hero_img }}')"></div>
+  {%- endif -%}
+  <div class="hero__grid" data-speed="0.35" aria-hidden="true"></div>
+  <p class="eyebrow">Catálogo · {{ settings.logo_text | default: 'DROP' }}.</p>
+  <h1 class="display">{{ collection.title }}</h1>
+  <p class="cat-hero__sub">
+    {%- if collection.description != blank -%}
+      {{ collection.description | strip_html | truncate: 160 }}
+    {%- elsif collection.products_count == 1 -%}
+      1 pieza disponible ahora mismo, enviada directo del proveedor.
+    {%- elsif collection.products_count > 1 -%}
+      {{ collection.products_count }} piezas disponibles ahora mismo, enviadas directo del proveedor.
+    {%- else -%}
+      Estamos preparando esta categoría. Muy pronto tendrás piezas nuevas aquí.
+    {%- endif -%}
+  </p>
+</section>
+
+<section>
+  {%- paginate collection.products by section.settings.per_page -%}
+    {%- if collection.products_count > 1 -%}
+      <div class="collection-toolbar">
+        <span class="collection-toolbar__count">{{ collection.products_count }} productos</span>
+        <label class="visually-hidden" for="sort-by">Ordenar por</label>
+        <select class="select" id="sort-by" data-sort-select data-current="{{ collection.sort_by | default: collection.default_sort_by }}">
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endif -%}
+
+    <div class="drops__grid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        {%- for i in (1..8) -%}
+          {% render 'product-card' %}
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination" aria-label="Paginación">
+        {{ paginate | default_pagination: next: 'Siguiente →', previous: '← Anterior' }}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+
+  <div class="cat-suggest">
+    {%- for handle in cat_links -%}
+      {%- unless handle == collection.handle -%}
+        {%- assign label = handle | capitalize -%}
+        {%- assign figure = '' -%}
+        {%- if handle == 'hombres' -%}{%- assign figure = 'hombre' -%}{%- endif -%}
+        {%- if handle == 'mujeres' -%}{%- assign figure = 'mujer' -%}{%- endif -%}
+        <a class="cat-suggest__pill" href="{{ cols }}/{{ handle }}" data-veil="{{ label }}"{% if figure != '' %} data-veil-figure="{{ figure }}"{% endif %}>{{ label }}</a>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección (página)",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Productos por página", "min": 8, "max": 24, "step": 4, "default": 12 }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,109 @@
+<section class="order" id="pedido">
+  <div class="section-grid" data-speed="0.4" aria-hidden="true"></div>
+
+  <div class="order__wrap">
+    <div class="order__copy reveal">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="display">{{ section.settings.heading | escape | newline_to_br }}</h2>
+      <p>{{ section.settings.text }}</p>
+
+      <ol class="order__steps">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}><b>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</b><span>{{ block.settings.text }}</span></li>
+        {%- endfor -%}
+      </ol>
+
+      {%- assign wa_text = settings.whatsapp_message | url_encode | replace: '+', '%20' -%}
+      <a class="btn btn--wa" href="https://wa.me/{{ settings.whatsapp_number | strip }}?text={{ wa_text }}" target="_blank" rel="noopener" data-whatsapp>
+        {% render 'icon-whatsapp' %} {{ settings.whatsapp_label }}
+      </a>
+    </div>
+
+    {%- form 'contact', id: 'order-form', class: 'order-form reveal' -%}
+      <input type="hidden" name="contact[tags]" value="pedido">
+
+      {%- if form.posted_successfully? -%}
+        <p class="form-msg form-msg--ok" role="status">¡Listo! Recibimos tu solicitud. Te contactaremos por WhatsApp o correo en cuanto la revisemos.</p>
+      {%- endif -%}
+
+      {%- if form.errors -%}
+        <div class="form-msg form-msg--err" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="field">
+        <label for="of-name">Nombre <i>*</i></label>
+        <input id="of-name" name="contact[name]" type="text" autocomplete="name" required value="{{ form.name }}">
+      </div>
+      <div class="field">
+        <label for="of-phone">WhatsApp / teléfono <i>*</i></label>
+        <input id="of-phone" name="contact[phone]" type="tel" inputmode="tel" autocomplete="tel" required placeholder="33 1234 5678" value="{{ form.phone }}">
+      </div>
+      <div class="field field--full">
+        <label for="of-email">Correo <i>*</i></label>
+        <input id="of-email" name="contact[email]" type="email" autocomplete="email" required value="{{ form.email }}">
+      </div>
+      <div class="field field--full">
+        <label for="of-body">¿Qué prenda(s) quieres? <i>*</i></label>
+        <textarea id="of-body" name="contact[body]" required placeholder="Ej. Chamarra bomber negra, hoodie oversize gris">{{ form.body }}</textarea>
+      </div>
+      <div class="field">
+        <label for="of-size">Talla</label>
+        <input id="of-size" name="contact[Talla]" type="text" placeholder="S, M, 28, 8 MX…">
+      </div>
+      <div class="field">
+        <label for="of-qty">Cantidad</label>
+        <input id="of-qty" name="contact[Cantidad]" type="number" min="1" max="99" value="1" inputmode="numeric">
+      </div>
+      <div class="field field--full">
+        <label for="of-city">Ciudad y colonia de entrega</label>
+        <input id="of-city" name="contact[Entrega]" type="text" autocomplete="address-level2" placeholder="Guadalajara, Jalisco · Col. Americana">
+      </div>
+      <div class="field field--full">
+        <label for="of-contact">¿Cómo prefieres que te contactemos?</label>
+        <select id="of-contact" name="contact[Contacto preferido]">
+          <option>WhatsApp</option>
+          <option>Llamada</option>
+          <option>Correo</option>
+        </select>
+      </div>
+
+      <div class="order-form__actions">
+        <button class="btn btn--accent" type="submit">Enviar solicitud</button>
+        <button class="btn btn--wa" type="button" data-order-whatsapp>{% render 'icon-whatsapp' %} Enviar por WhatsApp</button>
+      </div>
+      <p class="order-form__legal">Usaremos tus datos solo para atender este pedido. Para pagar en línea, agrega las prendas al carrito y finaliza en el checkout seguro de Shopify.</p>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Formulario de pedido",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto superior", "default": "Pedidos personalizados" },
+    { "type": "textarea", "id": "heading", "label": "Título", "default": "Haz tu\npedido" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "¿No encuentras tu talla o quieres varias prendas a la vez? Cuéntanos qué buscas y te atendemos personalmente." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Formulario de pedido",
+      "blocks": [
+        { "type": "step", "settings": { "text": "Llena el formulario o escríbenos por WhatsApp." } },
+        { "type": "step", "settings": { "text": "Confirmamos disponibilidad, tallas y tiempos de entrega." } },
+        { "type": "step", "settings": { "text": "Te enviamos el enlace de pago seguro y armamos tu envío." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

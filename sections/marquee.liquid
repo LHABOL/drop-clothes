@@ -1,0 +1,25 @@
+{%- assign items = section.settings.items | split: ',' -%}
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {%- for round in (1..2) -%}
+      {%- for item in items -%}
+        <span class="marquee__item">{{ item | strip }} <small>●</small></span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquesina de categorías",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "items",
+      "label": "Palabras (separadas por comas)",
+      "default": "Denim, Outerwear, Sneakers, Streetwear, Accesorios, Ediciones limitadas"
+    }
+  ],
+  "presets": [{ "name": "Marquesina de categorías" }]
+}
+{% endschema %}

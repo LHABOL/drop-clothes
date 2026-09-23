@@ -1,0 +1,17 @@
+<section>
+  <h1 class="display" style="font-size:clamp(2.2rem,5vw,3.6rem);margin:0 0 1.6rem">Colecciones</h1>
+  <div class="explore__grid">
+    {%- for collection in collections -%}
+      <a class="explore__tile explore__tile--text" href="{{ collection.url }}">
+        <span class="explore__tile-label display">{{ collection.title }}</span>
+        <span class="explore__tile-sub">{{ collection.products_count }} productos →</span>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lista de colecciones"
+}
+{% endschema %}

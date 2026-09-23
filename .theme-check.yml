@@ -1,0 +1,30 @@
+extends: :nothing
+ignore:
+  - static-preview/*
+  - node_modules/*
+SyntaxError:
+  enabled: true
+UnknownFilter:
+  enabled: true
+UndefinedObject:
+  enabled: true
+MissingTemplate:
+  enabled: true
+ValidSchema:
+  enabled: true
+ValidJson:
+  enabled: true
+LiquidHTMLSyntaxError:
+  enabled: true
+UnclosedHTMLElement:
+  enabled: true
+DeprecatedFilter:
+  enabled: true
+DeprecatedTag:
+  enabled: true
+InvalidAttr:
+  enabled: true
+UnusedAssign:
+  enabled: true
+MatchingTranslations:
+  enabled: false

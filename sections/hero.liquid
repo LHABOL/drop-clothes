@@ -1,0 +1,58 @@
+{%- if section.settings.image != blank -%}
+  {%- assign hero_img = section.settings.image | image_url: width: 2200 -%}
+{%- else -%}
+  {%- assign hero_img = 'hero.jpg' | asset_url -%}
+{%- endif -%}
+
+<section class="hero" id="hero">
+  <div class="hero__photo photo" data-speed="0.5" aria-hidden="true" style="background-image:url('{{ hero_img }}')"></div>
+  <div class="hero__grid" data-speed="0.35" aria-hidden="true"></div>
+
+  {%- if section.settings.badge != blank -%}
+    <div class="hero__badge" data-speed="0.78" aria-hidden="true">
+      <div class="hero__badge-inner">{{ section.settings.badge }}</div>
+    </div>
+  {%- endif -%}
+
+  <svg class="hero__garment" data-speed="0.65" viewBox="0 0 220 260" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+    <path d="M70 30 L95 12 L125 12 L150 30 L190 55 L165 95 L150 78 L150 240 L70 240 L70 78 L55 95 L30 55 Z"/>
+    <path d="M95 12 C100 30 120 30 125 12"/>
+    <line x1="110" y1="55" x2="110" y2="225"/>
+  </svg>
+
+  <p class="hero__eyebrow eyebrow">{{ section.settings.eyebrow }}</p>
+  <h1 class="display">{% render 'emphasis', text: section.settings.heading %}</h1>
+  <p class="hero__sub">{{ section.settings.subtext }}</p>
+
+  <div class="hero__actions">
+    {%- if section.settings.button_primary_label != blank -%}
+      <a class="btn btn--solid" href="{{ section.settings.button_primary_link | default: '#catalogo' }}">{{ section.settings.button_primary_label }}</a>
+    {%- endif -%}
+    {%- if section.settings.button_secondary_label != blank -%}
+      <a class="btn btn--line" href="{{ section.settings.button_secondary_link | default: '#como-funciona' }}">{{ section.settings.button_secondary_label }}</a>
+    {%- endif -%}
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="hero__scroll-line"></span>
+    <span class="mono">SCROLL</span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Portada (hero)",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo", "info": "Si la dejas vacía se usa la foto editorial incluida en el tema." },
+    { "type": "text", "id": "eyebrow", "label": "Texto superior", "default": "Ropa de marca · México" },
+    { "type": "textarea", "id": "heading", "label": "Titular", "default": "Ropa de\nmarca.\nSin *bodega*.", "info": "Un salto de línea por renglón. Lo que vaya entre *asteriscos* se resalta con el color de acento." },
+    { "type": "textarea", "id": "subtext", "label": "Texto de apoyo", "default": "Curamos prendas de marcas independientes y las enviamos directo del proveedor a tu puerta — sin intermediarios, sin stock parado, sin relleno." },
+    { "type": "text", "id": "badge", "label": "Sello circular", "default": "Nuevo drop cada semana" },
+    { "type": "text", "id": "button_primary_label", "label": "Botón principal", "default": "Ver catálogo" },
+    { "type": "url", "id": "button_primary_link", "label": "Enlace del botón principal" },
+    { "type": "text", "id": "button_secondary_label", "label": "Botón secundario", "default": "Cómo funciona" },
+    { "type": "url", "id": "button_secondary_link", "label": "Enlace del botón secundario" }
+  ],
+  "presets": [{ "name": "Portada (hero)" }]
+}
+{% endschema %}

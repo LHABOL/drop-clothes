@@ -1,0 +1,32 @@
+<section>
+  <h1 class="display" style="font-size:clamp(2.2rem,5vw,3.6rem);margin:0 0 1.6rem">Buscar</h1>
+  <form class="search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Buscar productos" aria-label="Buscar">
+    <input type="hidden" name="type" value="product">
+    <button class="btn btn--solid" type="submit">Buscar</button>
+  </form>
+
+  {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+      <p class="collection-toolbar__count">{{ search.results_count }} resultado{% if search.results_count != 1 %}s{% endif %} para "{{ search.terms | escape }}"</p>
+      <div class="drops__grid" style="margin-top:1.4rem">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'product-card', product: item %}
+          {%- endif -%}
+        {%- else -%}
+          <div class="empty-state" style="grid-column:1/-1">No encontramos resultados. Prueba con otra palabra.</div>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination">{{ paginate | default_pagination: next: 'Siguiente →', previous: '← Anterior' }}</nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Búsqueda"
+}
+{% endschema %}

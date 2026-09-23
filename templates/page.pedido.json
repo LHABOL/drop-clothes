@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "order-form",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "text": "Llena el formulario o escríbenos por WhatsApp." } },
+        "s2": { "type": "step", "settings": { "text": "Confirmamos disponibilidad, tallas y tiempos de entrega." } },
+        "s3": { "type": "step", "settings": { "text": "Te enviamos el enlace de pago seguro y armamos tu envío." } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Pedidos personalizados",
+        "heading": "Haz tu\npedido",
+        "text": "¿No encuentras tu talla o quieres varias prendas a la vez? Cuéntanos qué buscas y te atendemos personalmente."
+      }
+    }
+  },
+  "order": ["main"]
+}

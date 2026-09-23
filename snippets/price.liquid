@@ -1,0 +1,17 @@
+{%- comment -%}
+  Precio con precio anterior tachado.
+  Parámetros: product (obligatorio)
+{%- endcomment -%}
+{%- assign compare = product.compare_at_price -%}
+{%- assign now = product.price -%}
+<span class="card__price-group" data-price-group>
+  {%- if compare > now -%}
+    <s class="card__price-old mono" data-price-old>{{ compare | money_without_trailing_zeros }}</s>
+  {%- else -%}
+    <s class="card__price-old mono" data-price-old hidden></s>
+  {%- endif -%}
+  <span class="card__price mono" data-price>
+    {%- if product.price_varies -%}Desde {% endif -%}
+    {{ now | money_without_trailing_zeros }} {{ cart.currency.iso_code }}
+  </span>
+</span>

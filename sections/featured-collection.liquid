@@ -1,0 +1,43 @@
+{%- assign col = section.settings.collection -%}
+<section class="drops" id="catalogo">
+  <div class="section-grid" data-speed="0.42" aria-hidden="true"></div>
+
+  <div class="section-head reveal">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="display">{{ section.settings.heading | escape | newline_to_br }}</h2>
+    </div>
+    <p>{{ section.settings.text }}</p>
+  </div>
+
+  <div class="drops__grid" id="drops-grid">
+    {%- if col != blank and col.products_count > 0 -%}
+      {%- for product in col.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..section.settings.placeholder_count) -%}
+        {% render 'product-card' %}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if col != blank and col.products_count > section.settings.limit -%}
+    <p style="margin-top:2rem"><a class="btn btn--line" href="{{ col.url }}">Ver toda la colección</a></p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Catálogo destacado",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Colección", "info": "Si no eliges ninguna (o está vacía) se muestran espacios en blanco listos para tus productos." },
+    { "type": "range", "id": "limit", "label": "Productos a mostrar", "min": 4, "max": 24, "step": 4, "default": 8 },
+    { "type": "range", "id": "placeholder_count", "label": "Espacios en blanco (sin colección)", "min": 4, "max": 12, "step": 4, "default": 8 },
+    { "type": "text", "id": "eyebrow", "label": "Texto superior", "default": "Nueva temporada" },
+    { "type": "textarea", "id": "heading", "label": "Título", "default": "Drops\nactivos" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Disponibilidad real del proveedor. Lo que se agota, se agota — no hay bodega de respaldo." }
+  ],
+  "presets": [{ "name": "Catálogo destacado" }]
+}
+{% endschema %}

@@ -1,0 +1,118 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "DROP.",
+    "theme_version": "1.0.0",
+    "theme_author": "DROP.",
+    "theme_documentation_url": "https://github.com/LHABOL/drop-clothes",
+    "theme_support_url": "https://github.com/LHABOL/drop-clothes/issues"
+  },
+  {
+    "name": "Marca",
+    "settings": [
+      {
+        "type": "text",
+        "id": "logo_text",
+        "label": "Texto del logotipo",
+        "default": "DROP",
+        "info": "Se muestra con un punto de color al final."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "Cuadrado, mínimo 32 x 32 px."
+      }
+    ]
+  },
+  {
+    "name": "WhatsApp y contacto",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "whatsapp_enabled",
+        "label": "Mostrar botón flotante de WhatsApp",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "Número de WhatsApp",
+        "default": "523333014958",
+        "info": "Solo dígitos, con código de país y sin +. México: 52 + 10 dígitos."
+      },
+      {
+        "type": "textarea",
+        "id": "whatsapp_message",
+        "label": "Mensaje que aparece al iniciar la conversación",
+        "default": "Hola buen día. Quisiera hacer un pedido, pero pudieras decirme como es el proceso"
+      },
+      {
+        "type": "text",
+        "id": "whatsapp_label",
+        "label": "Texto del botón",
+        "default": "Pedir por WhatsApp"
+      },
+      {
+        "type": "text",
+        "id": "contact_email",
+        "label": "Correo de contacto (se muestra en el pie de página)"
+      }
+    ]
+  },
+  {
+    "name": "Pantalla de bienvenida",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "intro_enabled",
+        "label": "Mostrar pantalla de bienvenida en el inicio",
+        "info": "Se muestra una vez por visita.",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "intro_text_1",
+        "label": "Primer mensaje",
+        "default": "¿Estás listo?"
+      },
+      {
+        "type": "text",
+        "id": "intro_text_2",
+        "label": "Segundo mensaje",
+        "default": "Estrena ya"
+      },
+      {
+        "type": "text",
+        "id": "intro_button",
+        "label": "Texto del botón",
+        "default": "Inicio"
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" }
+    ]
+  },
+  {
+    "name": "Carrito",
+    "settings": [
+      {
+        "type": "text",
+        "id": "cart_note_label",
+        "label": "Etiqueta de las notas del pedido",
+        "default": "Notas para tu pedido (talla, color, indicaciones de entrega)"
+      },
+      {
+        "type": "textarea",
+        "id": "cart_hint",
+        "label": "Texto bajo el total",
+        "default": "Envío e impuestos se calculan al finalizar la compra. El pago se procesa de forma segura en Shopify."
+      }
+    ]
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "current": {
+    "logo_text": "DROP",
+    "whatsapp_enabled": true,
+    "whatsapp_number": "523333014958",
+    "whatsapp_message": "Hola buen día. Quisiera hacer un pedido, pero pudieras decirme como es el proceso",
+    "whatsapp_label": "Pedir por WhatsApp",
+    "intro_enabled": true,
+    "intro_text_1": "¿Estás listo?",
+    "intro_text_2": "Estrena ya",
+    "intro_button": "Inicio"
+  }
+}

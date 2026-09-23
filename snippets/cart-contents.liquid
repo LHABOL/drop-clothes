@@ -1,0 +1,57 @@
+{%- comment -%}
+  Contenido del carrito (líneas + total + botón de pago). Se usa en el cajón y en la página /cart.
+{%- endcomment -%}
+{%- if cart.item_count == 0 -%}
+  <div class="cart-body">
+    <div class="cart-empty">
+      <p>Tu carrito está vacío.</p>
+      <a class="btn btn--solid" href="{{ routes.collections_url }}/all" data-cart-close>Ver productos</a>
+    </div>
+  </div>
+{%- else -%}
+  <div class="cart-body">
+    {%- for item in cart.items -%}
+      <div class="cart-line" data-line-key="{{ item.key }}">
+        <a class="cart-line__img" href="{{ item.url }}" aria-hidden="true" tabindex="-1">
+          {%- if item.image -%}
+            <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | default: item.product.title | escape }}" width="76" height="96" loading="lazy">
+          {%- else -%}
+            <span class="cart-line__ph"></span>
+          {%- endif -%}
+        </a>
+        <div class="cart-line__info">
+          <a class="cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+          {%- unless item.product.has_only_default_variant -%}
+            <span class="cart-line__meta">{{ item.variant.title }}</span>
+          {%- endunless -%}
+          <span class="cart-line__price mono">
+            {%- if item.original_price > item.final_price -%}<s>{{ item.original_price | money_without_trailing_zeros }}</s>{%- endif -%}
+            {{ item.final_price | money_without_trailing_zeros }}
+          </span>
+          <div class="qty">
+            <button type="button" data-cart-qty="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Quitar uno">−</button>
+            <input type="text" inputmode="numeric" value="{{ item.quantity }}" readonly aria-label="Cantidad">
+            <button type="button" data-cart-qty="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Agregar uno">+</button>
+          </div>
+        </div>
+        <div class="cart-line__end">
+          <span class="mono">{{ item.final_line_price | money_without_trailing_zeros }}</span>
+          <button class="cart-line__remove" type="button" data-cart-qty="{{ item.key }}" data-qty="0">Quitar</button>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <form class="cart-foot" action="{{ routes.cart_url }}" method="post">
+    <label class="cart-note">
+      <span>{{ settings.cart_note_label }}</span>
+      <textarea name="note" data-cart-note>{{ cart.note }}</textarea>
+    </label>
+    <div class="cart-foot__row">
+      <span>Subtotal</span>
+      <span class="mono">{{ cart.total_price | money_without_trailing_zeros }} {{ cart.currency.iso_code }}</span>
+    </div>
+    <p class="cart-foot__hint">{{ settings.cart_hint }}</p>
+    <button class="btn btn--accent btn--block" type="submit" name="checkout">Finalizar compra</button>
+  </form>
+{%- endif -%}

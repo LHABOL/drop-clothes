@@ -1,0 +1,50 @@
+<section class="how" id="como-funciona">
+  <div class="section-grid" data-speed="0.4" aria-hidden="true"></div>
+  <div class="section-head reveal">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="display">{{ section.settings.heading | escape | newline_to_br }}</h2>
+    </div>
+    <p>{{ section.settings.text }}</p>
+  </div>
+  <div class="how__grid">
+    {%- for block in section.blocks -%}
+      <div class="step reveal" {{ block.shopify_attributes }}>
+        <span class="step__num mono">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cómo funciona",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Texto superior", "default": "El recorrido de tu pedido" },
+    { "type": "textarea", "id": "heading", "label": "Título", "default": "Cómo\nfunciona" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Tres pasos, un solo envío. Sin pasar por una bodega intermedia ni inventario que sobra." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Paso" },
+        { "type": "textarea", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cómo funciona",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Eliges la prenda", "text": "Filtra por categoría o género. Cada ficha muestra la disponibilidad real del proveedor." } },
+        { "type": "step", "settings": { "title": "Pagas de forma segura", "text": "Agrega al carrito y finaliza tu compra en el checkout de Shopify, con tarjeta, PayPal u otros métodos." } },
+        { "type": "step", "settings": { "title": "Se envía directo", "text": "El proveedor empaca y despacha a tu domicilio. Tú solo sigues el rastreo." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
